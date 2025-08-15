@@ -1,8 +1,37 @@
-# HospitalFinder
+# Hospital Finder
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.4.
+A modern, responsive web application for finding and comparing hospitals across different states. Built with Angular and styled with Tailwind CSS.
 
-## Development server
+## Features
+
+- Search and filter hospitals by state, services, type, and delivery cost range
+- View hospitals grouped by state
+- View detailed hospital information including location, services, delivery costs, and contact details
+- Submit new hospital entries through a public form
+- Add comments to hospital detail pages
+- Responsive design that works on mobile, tablet, and desktop devices
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- NPM (v8 or higher)
+
+### Environment Configuration
+This project uses environment-specific configuration. See [ENVIRONMENT.md](ENVIRONMENT.md) for details.
+
+### Installation
+
+1. Clone the repository
+2. Navigate to the project directory
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+### Development server
 
 To start a local development server, run:
 
@@ -11,6 +40,10 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+### API Configuration
+
+The application is configured to work with a backend API. Update the `proxy.conf.js` file with the correct API URL if needed.
 
 ## Code scaffolding
 

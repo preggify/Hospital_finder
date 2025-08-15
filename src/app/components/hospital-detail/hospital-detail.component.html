@@ -1,0 +1,166 @@
+<div *ngIf="isLoading" class="flex justify-center py-12">
+  <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+</div>
+
+<div *ngIf="errorMessage && !isLoading" class="bg-red-100 border border-primary text-primary px-4 py-3 rounded-lg max-w-4xl mx-auto">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="hospital && !isLoading" class="max-w-4xl mx-auto space-y-8">
+  <!-- Hospital Header -->
+  <section class="bg-gradient-to-r from-primary/10 to-accent-2/10 rounded-2xl p-6 shadow-md">
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+      <div>
+        <div class="h-2 w-24 bg-primary rounded-full mb-2"></div>
+        <h1 class="text-3xl font-bold text-gray-800">{{ hospital.name }}</h1>
+      </div>
+      <span class="inline-block bg-secondary text-white px-4 py-1 rounded-full text-sm font-medium">
+        {{ hospital.type }}
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Left Column -->
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-lg font-semibold text-primary">Location</h3>
+          <p class="text-gray-700">{{ hospital.location }}</p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-primary">State</h3>
+          <p class="text-gray-700">{{ hospital.state }}</p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-primary">Contact</h3>
+          <p class="text-gray-700">{{ hospital.contact }}</p>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-lg font-semibold text-secondary">Services Offered</h3>
+          <ul class="grid grid-cols-2 gap-2 mt-2">
+            <li *ngFor="let service of hospital.services; let i = index"
+                class="flex items-center space-x-2">
+              <span class="h-2 w-2 rounded-full" [ngClass]="{
+                'bg-primary': i % 4 === 0,
+                'bg-secondary': i % 4 === 1,
+                'bg-accent-2': i % 4 === 2,
+                'bg-accent-3': i % 4 === 3
+              }"></span>
+              <span class="text-gray-700">{{ service }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-accent-2">Delivery Costs</h3>
+          <div class="bg-white p-4 rounded-lg border-2 border-accent-1">
+            <div class="grid grid-cols-2 gap-y-2">
+              <span class="text-gray-600">Normal Delivery:</span>
+              <span class="font-medium text-gray-800">
+                {{ hospital.delivery_cost.normal }}
+              </span>
+
+              <span class="text-gray-600">Emergency Delivery:</span>
+              <span class="font-medium text-gray-800">
+                {{ hospital.delivery_cost.emergency || 'Not specified' }}
+              </span>
+
+              <span class="text-gray-600">Cesarean Section:</span>
+              <span class="font-medium text-gray-800">
+                {{ hospital.delivery_cost.cesarean || hospital.delivery_cost.cs || 'Not specified' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comments Section -->
+  <section class="bg-gradient-to-r from-accent-3/10 to-primary/10 rounded-2xl p-6 shadow-md">
+    <div class="flex items-center mb-6">
+      <div class="h-3 w-10 bg-accent-3 rounded-full mr-3"></div>
+      <h2 class="text-2xl font-bold text-gray-800">Comments</h2>
+    </div>
+
+    <!-- Comment Form -->
+    <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="mb-8 bg-white p-6 rounded-xl shadow-sm">
+      <div class="mb-4">
+        <label for="author" class="block text-sm font-medium text-primary mb-1">Your Name</label>
+        <input
+          type="text"
+          id="author"
+          formControlName="author"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:ring-accent-2 focus:border-accent-2"
+          [ngClass]="{'border-primary': commentForm.get('author')?.touched && commentForm.get('author')?.invalid}"
+        >
+        <div *ngIf="commentForm.get('author')?.touched && commentForm.get('author')?.invalid" class="text-primary text-sm mt-1">
+          Please enter your name.
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="text" class="block text-sm font-medium text-accent-3 mb-1">Your Comment</label>
+        <textarea
+          id="text"
+          formControlName="text"
+          rows="4"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:ring-accent-2 focus:border-accent-2"
+          [ngClass]="{'border-primary': commentForm.get('text')?.touched && commentForm.get('text')?.invalid}"
+        ></textarea>
+        <div *ngIf="commentForm.get('text')?.touched && commentForm.get('text')?.invalid" class="text-primary text-sm mt-1">
+          Comment must be between 5 and 500 characters.
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="commentForm.invalid || commentSubmitted"
+        class="bg-accent-2 text-white py-2 px-6 rounded-lg hover:bg-accent-3 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span *ngIf="!commentSubmitted">Add Comment</span>
+        <span *ngIf="commentSubmitted">Submitting...</span>
+      </button>
+    </form>
+
+    <!-- Comments List -->
+    <div *ngIf="hospital.comments && hospital.comments.length > 0" class="space-y-4">
+      <div *ngFor="let comment of hospital.comments; let i = index"
+           class="bg-white p-4 rounded-lg shadow-sm mb-4 border-l-4"
+           [ngClass]="{
+             'border-primary': i % 3 === 0,
+             'border-secondary': i % 3 === 1,
+             'border-accent-3': i % 3 === 2
+           }">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="font-bold" [ngClass]="{
+            'text-primary': i % 3 === 0,
+            'text-secondary': i % 3 === 1,
+            'text-accent-3': i % 3 === 2
+          }">{{ comment.author }}</h4>
+          <span class="text-sm text-gray-500">{{ comment.createdAt | date:'medium' }}</span>
+        </div>
+        <p class="text-gray-700">{{ comment.text }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="!hospital.comments || hospital.comments.length === 0" class="text-center text-accent-3 bg-white py-4 rounded-lg">
+      No comments yet. Be the first to comment!
+    </div>
+  </section>
+
+  <!-- Back Button -->
+  <div class="flex">
+    <a
+      routerLink="/"
+      class="bg-accent-1 text-gray-800 py-2 px-6 rounded-lg hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-2 flex items-center"
+    >
+      <span class="mr-2">←</span> Back to Hospital List
+    </a>
+  </div>
+</div>

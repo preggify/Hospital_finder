@@ -1,0 +1,18 @@
+/* Simple CSS for focus states - most styling comes from Tailwind */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-field-transition {
+  transition: all 0.2s ease;
+}
+
+@keyframes progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-progress {
+  animation: progress 2s linear forwards;
+}

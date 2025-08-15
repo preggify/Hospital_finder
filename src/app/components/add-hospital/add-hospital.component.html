@@ -1,0 +1,285 @@
+<div class="max-w-3xl mx-auto">
+  <!-- Page Header -->
+  <div class="mb-8 bg-gradient-to-r from-primary to-accent-3 text-white p-6 rounded-2xl shadow-md">
+    <div class="flex items-center mb-2">
+      <div class="h-3 w-10 bg-white rounded-full mr-3"></div>
+      <h1 class="text-3xl font-bold">Add a New Hospital</h1>
+    </div>
+    <p class="text-white/90 ml-13">
+      Submit information about a hospital to our database. All fields marked with * are required.
+    </p>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="submitSuccess" class="bg-accent-2/20 border border-accent-2 text-accent-2 px-4 py-3 rounded-lg mb-8">
+    <p class="font-medium">Thank you for your submission!</p>
+    <p>Your hospital information has been successfully added. Redirecting you to the home page...</p>
+    <div class="mt-2">
+      <div class="w-full bg-accent-2/30 h-1.5 rounded-full overflow-hidden">
+        <div class="bg-accent-2 h-full rounded-full animate-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="submitError" class="bg-primary/10 border border-primary text-primary px-4 py-3 rounded-lg mb-8">
+    <p class="font-medium">Error:</p>
+    <p>{{ submitError }}</p>
+  </div>
+
+  <!-- Hospital Form -->
+  <form [formGroup]="hospitalForm" (ngSubmit)="onSubmit()" class="bg-white rounded-2xl p-6 shadow-md">
+    <!-- Basic Information Section -->
+    <div class="mb-8">
+      <div class="flex items-center mb-4">
+        <div class="h-3 w-10 bg-primary rounded-full mr-3"></div>
+        <h2 class="text-xl font-bold text-gray-800">Basic Information</h2>
+      </div>
+      <div class="border-b border-gray-200 mb-4"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Hospital Name -->
+        <div class="md:col-span-2">
+          <label for="name" class="block text-sm font-medium text-primary mb-1">Hospital Name *</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-accent-2 focus:border-accent-2"
+            [ngClass]="{'border-primary': hospitalForm.get('name')?.touched && hospitalForm.get('name')?.invalid}"
+          >
+          <div *ngIf="hospitalForm.get('name')?.touched && hospitalForm.get('name')?.errors?.['required']" class="text-primary text-sm mt-1">
+            Hospital name is required.
+          </div>
+          <div *ngIf="hospitalForm.get('name')?.touched && hospitalForm.get('name')?.errors?.['minlength']" class="text-primary text-sm mt-1">
+            Hospital name must be at least 3 characters long.
+          </div>
+        </div>
+
+        <!-- State -->
+        <div>
+          <label for="state" class="block text-sm font-medium text-primary mb-1">State *</label>
+          <select
+            id="state"
+            formControlName="state"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue bg-white"
+            [ngClass]="{'border-primary': hospitalForm.get('state')?.touched && hospitalForm.get('state')?.invalid}"
+          >
+            <option value="" disabled>Select a State</option>
+            <option *ngFor="let state of statesList" [value]="state">{{ state }}</option>
+          </select>
+          <div *ngIf="hospitalForm.get('state')?.touched && hospitalForm.get('state')?.invalid" class="text-primary text-sm mt-1">
+            Please select a state.
+          </div>
+        </div>
+
+        <!-- Hospital Type -->
+        <div>
+          <label for="type" class="block text-sm font-medium text-primary mb-1">Hospital Type *</label>
+          <select
+            id="type"
+            formControlName="type"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue bg-white"
+            [ngClass]="{'border-primary': hospitalForm.get('type')?.touched && hospitalForm.get('type')?.invalid}"
+          >
+            <option value="" disabled>Select a Type</option>
+            <option *ngFor="let type of hospitalTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div *ngIf="hospitalForm.get('type')?.touched && hospitalForm.get('type')?.invalid" class="text-primary text-sm mt-1">
+            Please select a hospital type.
+          </div>
+        </div>
+      </div>
+
+      <!-- Location and Contact -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- Location -->
+        <div>
+          <label for="location" class="block text-sm font-medium text-primary mb-1">Address/Location *</label>
+          <input
+            type="text"
+            id="location"
+            formControlName="location"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue"
+            [ngClass]="{'border-primary': hospitalForm.get('location')?.touched && hospitalForm.get('location')?.invalid}"
+            placeholder="Street address, city, zip code"
+          >
+          <div *ngIf="hospitalForm.get('location')?.touched && hospitalForm.get('location')?.invalid" class="text-primary text-sm mt-1">
+            Location is required.
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <label for="contact" class="block text-sm font-medium text-primary mb-1">Contact Number *</label>
+          <input
+            type="tel"
+            id="contact"
+            formControlName="contact"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue"
+            [ngClass]="{'border-primary': hospitalForm.get('contact')?.touched && hospitalForm.get('contact')?.invalid}"
+            placeholder="e.g., +234 (123) 456-7890"
+          >
+          <div *ngIf="hospitalForm.get('contact')?.touched && hospitalForm.get('contact')?.errors?.['required']" class="text-primary text-sm mt-1">
+            Contact number is required.
+          </div>
+          <div *ngIf="hospitalForm.get('contact')?.touched && hospitalForm.get('contact')?.errors?.['pattern']" class="text-primary text-sm mt-1">
+            Please enter a valid phone number.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">Services Offered</h2>
+
+      <div formArrayName="services">
+        <div *ngFor="let service of servicesArray.controls; let i = index" class="mb-3 flex items-center">
+          <select
+            [formControlName]="i"
+            class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue bg-white mr-3"
+            [ngClass]="{'border-primary': service.touched && service.invalid || isDuplicateService(i)}"
+          >
+            <option value="" disabled>Select a Service</option>
+            <option *ngFor="let serviceOption of availableServices" [value]="serviceOption">
+              {{ serviceOption }}
+            </option>
+          </select>
+
+          <button
+            type="button"
+            (click)="removeService(i)"
+            class="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400"
+            [disabled]="servicesArray.length <= 1"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div *ngIf="servicesArray.invalid && (servicesArray.touched || servicesArray.dirty)" class="text-primary text-sm mt-1 mb-3">
+          Each service must be selected.
+        </div>
+
+        <div *ngFor="let service of servicesArray.controls; let i = index">
+          <div *ngIf="isDuplicateService(i)" class="text-primary text-sm mt-1 mb-3">
+            This service has been selected multiple times.
+          </div>
+        </div>
+
+        <button
+          type="button"
+          (click)="addService()"
+          class="mt-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg flex items-center hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Add Another Service
+        </button>
+      </div>
+    </div>
+
+    <!-- Delivery Cost Section -->
+    <div class="mb-8" formGroupName="delivery_cost">
+      <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">Delivery Costs</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Normal Delivery -->
+        <div>
+          <label for="normal" class="block text-sm font-medium text-primary mb-1">Normal Delivery *</label>
+          <input
+            type="number"
+            id="normal"
+            formControlName="normal"
+            min="0"
+            step="0.01"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue"
+            [ngClass]="{'border-primary': hospitalForm.get('delivery_cost.normal')?.touched && hospitalForm.get('delivery_cost.normal')?.invalid}"
+          >
+          <div *ngIf="hospitalForm.get('delivery_cost.normal')?.touched && hospitalForm.get('delivery_cost.normal')?.errors?.['required']" class="text-primary text-sm mt-1">
+            Cost is required.
+          </div>
+          <div *ngIf="hospitalForm.get('delivery_cost.normal')?.touched && hospitalForm.get('delivery_cost.normal')?.errors?.['min']" class="text-primary text-sm mt-1">
+            Cost cannot be negative.
+          </div>
+        </div>
+
+        <!-- Emergency Delivery -->
+        <div>
+          <label for="emergency" class="block text-sm font-medium text-primary mb-1">Emergency Delivery *</label>
+          <input
+            type="number"
+            id="emergency"
+            formControlName="emergency"
+            min="0"
+            step="0.01"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue"
+            [ngClass]="{'border-primary': hospitalForm.get('delivery_cost.emergency')?.touched && hospitalForm.get('delivery_cost.emergency')?.invalid}"
+          >
+          <div *ngIf="hospitalForm.get('delivery_cost.emergency')?.touched && hospitalForm.get('delivery_cost.emergency')?.errors?.['required']" class="text-primary text-sm mt-1">
+            Cost is required.
+          </div>
+          <div *ngIf="hospitalForm.get('delivery_cost.emergency')?.touched && hospitalForm.get('delivery_cost.emergency')?.errors?.['min']" class="text-primary text-sm mt-1">
+            Cost cannot be negative.
+          </div>
+        </div>
+
+        <!-- Cesarean Section -->
+        <div>
+          <label for="cs" class="block text-sm font-medium text-primary mb-1">Cesarean Section *</label>
+          <input
+            type="number"
+            id="cs"
+            formControlName="cs"
+            min="0"
+            step="0.01"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-blue focus:border-brand-blue"
+            [ngClass]="{'border-primary': hospitalForm.get('delivery_cost.cs')?.touched && hospitalForm.get('delivery_cost.cs')?.invalid}"
+          >
+          <div *ngIf="hospitalForm.get('delivery_cost.cs')?.touched && hospitalForm.get('delivery_cost.cs')?.errors?.['required']" class="text-primary text-sm mt-1">
+            Cost is required.
+          </div>
+          <div *ngIf="hospitalForm.get('delivery_cost.cs')?.touched && hospitalForm.get('delivery_cost.cs')?.errors?.['min']" class="text-primary text-sm mt-1">
+            Cost cannot be negative.
+          </div>
+        </div>
+
+        <!-- Currency -->
+        <div>
+          <label for="currency" class="block text-sm font-medium text-primary mb-1">Currency</label>
+          <div class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700">
+            NGN
+            <input type="hidden" formControlName="currency" value="NGN">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="flex justify-between items-center mt-8">
+      <a
+        routerLink="/"
+        class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+      >
+        Cancel
+      </a>
+
+      <button
+        type="submit"
+        [disabled]="isSubmitting || hospitalForm.invalid"
+        class="px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span *ngIf="!isSubmitting">Submit Hospital</span>
+        <span *ngIf="isSubmitting">Submitting...</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- Disclaimer -->
+  <div class="mt-6 p-4 bg-blue-50 rounded-lg text-center text-sm text-gray-600">
+    <strong>Note:</strong> Data submitted may be used to train an AI. By submitting this form, you acknowledge this.
+  </div>
+</div>

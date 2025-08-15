@@ -1,0 +1,136 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles for responsive tables and dark mode */
+.table-responsive {
+  width: 100%;
+  font-size: 0.875rem;
+  text-align: left;
+  color: #374151;
+}
+
+.dark .table-responsive {
+  color: #d1d5db;
+}
+
+.table-responsive thead {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #374151;
+  background-color: #f9fafb;
+}
+
+.dark .table-responsive thead {
+  background-color: #1f2937;
+  color: #d1d5db;
+}
+
+.table-responsive tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+  background-color: white;
+}
+
+.table-responsive tbody tr:last-child {
+  border-bottom: none;
+}
+
+.dark .table-responsive tbody tr {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+
+.table-responsive tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.dark .table-responsive tbody tr:hover {
+  background-color: #4b5563;
+}
+
+/* Dark mode transitions */
+.transition-colors {
+  transition: all 200ms ease-in-out;
+}
+
+/* Custom components */
+.card {
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: colors 200ms ease-in-out;
+}
+
+.dark .card {
+  background-color: #1f2937;
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background-color: theme('colors.primary');
+  color: white;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: opacity 150ms ease-in-out;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background-color: theme('colors.secondary');
+  color: white;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: opacity 150ms ease-in-out;
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+}
+
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #111827;
+  transition: all 150ms ease-in-out;
+}
+
+.input-field:focus {
+  border-color: theme('colors.primary');
+  box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.3);
+  outline: none;
+}
+
+.dark .input-field {
+  border-color: #4b5563;
+  background-color: #374151;
+  color: white;
+}
+
+/* Mobile responsive helpers */
+@media (max-width: 768px) {
+  .table-responsive td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .overflow-auto-mobile {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

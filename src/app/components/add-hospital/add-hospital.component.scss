@@ -1,0 +1,27 @@
+/* Add Hospital Component Styles */
+
+:host {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Custom focus styles */
+input:focus, select:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  outline: none;
+}
+
+/* Smooth transitions */
+button, input, select {
+  transition: all 0.2s ease-in-out;
+}
