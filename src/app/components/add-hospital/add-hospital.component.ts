@@ -17,7 +17,8 @@ export class AddHospitalComponent implements OnInit {
   submitSuccess = false;
   submitError = '';
 
-  // Available options for the form
+  // Available options for the form..
+  //thica can also be stored in a db..
   statesList = [
     'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi',
     'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta',
