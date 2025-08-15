@@ -19,28 +19,20 @@ Replace `yourusername` in the command below with your actual GitHub username:
 ```bash
 git remote set-url origin https://github.com/yourusername/preggify-hospital-finder.git
 ```
-
 If you prefer SSH (recommended if you have SSH keys set up with GitHub):
 
 ```bash
 git remote set-url origin git@github.com:yourusername/preggify-hospital-finder.git
 ```
-
 ## 3. Push Your Code to GitHub
-
 ```bash
 git push -u origin main
 ```
-
 You might be prompted for your GitHub credentials if using HTTPS.
-
 ## 4. Verify the Push
-
 1. Go to your GitHub repository page
 2. You should see all your project files and the commit history
-
 ## 5. Additional GitHub Setup (Optional)
-
 - Set up branch protection rules for `main`
 - Add collaborators to your repository
 - Configure GitHub Actions for CI/CD

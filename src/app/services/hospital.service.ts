@@ -6,7 +6,7 @@ import { Hospital, Comment, ApiResponse, HospitalsResponse, DeliveryCost } from 
 import { MOCK_HOSPITALS } from '../mocks/mock-hospitals';
 import { environment } from '../../environments/environment';
 
-// Define interface for stats response
+// Define interface for stats response..
 interface StatsResponse {
   totalHospitals: number;
   totalStates: number;
