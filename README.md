@@ -23,13 +23,18 @@ This project uses environment-specific configuration. See [ENVIRONMENT.md](ENVIR
 
 ### Installation
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Install dependencies:
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/preggify-hospital-finder.git
+cd preggify-hospital-finder
+```
 
+2. Install dependencies:
 ```bash
 npm install
 ```
+
+> **Note:** Replace `yourusername` with your actual GitHub username in the clone URL.
 
 ### Development server
 
@@ -86,6 +91,16 @@ ng e2e
 ```
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Contributing
+
+See [GITHUB_SETUP.md](GITHUB_SETUP.md) for instructions on setting up the GitHub repository.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## Additional Resources
 
