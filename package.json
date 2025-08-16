@@ -5,8 +5,10 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.js",
     "build": "ng build",
+    "build:render": "cp -R src/environments dist/ && ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy:github": "ng build --base-href=\"https://preggify.github.io/Hospital_finder/\" && npx angular-cli-ghpages --dir=dist/browser"
   },
   "prettier": {
     "overrides": [
