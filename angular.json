@@ -50,8 +50,8 @@
               "outputHashing": "all",
               "fileReplacements": [
                 {
-                  "replace": "${workspaceRoot}/src/environments/environment.ts",
-                  "with": "${workspaceRoot}/src/environments/environment.prod.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ]
             },
